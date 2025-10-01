@@ -2,8 +2,24 @@ import { useForm } from "react-hook-form"
 function App() {
     const {handleSubmit, register} = useForm()
 
-    const onSubmitForm = (data) =>{
+    const onSubmitForm = async (data) => {
         console.log(data)
+
+        try {
+            const response = await fetch("http://127.0.0.1:4200/api/users", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            const result = await response.json();
+            console.log("Server response:", result);
+            alert(result.message);
+        } catch (error) {
+            console.error("Error:", error);
+        }
     }
 
     return (
